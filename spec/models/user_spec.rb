@@ -9,6 +9,11 @@ describe User do
     FactoryGirl.build(:user, :username => nil).should_not be_valid
   end
 
+  it "must not permit same username" do
+     #user =  FactoryGirl.build(:user)
+    #should validate_uniqueness_of(:username, password: "1234")
+  end
+
   it "must have password" do
     FactoryGirl.build(:user, :password => nil).should_not be_valid
   end
@@ -31,6 +36,6 @@ describe User do
   end
 
   describe "associations" do
-
+    it {should have_many(:links)}
   end
 end

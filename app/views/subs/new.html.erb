@@ -1,0 +1,31 @@
+<h1>Create Sub</h2>
+
+<%= render :partial => "layouts/errors" %>
+
+<form action="<%=subs_url%>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+
+  <label for="sub_name">Name</label>
+  <input type="text" id="sub_name" name="sub[name]">
+  <br>
+  <label for="sub_mod_id">Moderator</label>
+  <select id="sub_mod_id" name="sub[mod_id]">
+    <option selected="selected"><option>
+    <% User.all.each do |user| %>
+      <option value="<%=user.id%>"><%=user.username%></option>
+    <% end %>
+  </select>
+  <br>
+  Add Links
+  <br>
+  <% 5.times do |i| %>
+  <input type="text" name="links[][title]" >
+  <input type="text" name="links[][url]" >
+  <input type="text" name="links[][body]" >
+  <input type="hidden" name="links[][user_id]" value="<%= current_user.id %>">
+  <br>
+  <% end %>
+
+
+  <input type="submit" value="Create Sub">
+</form>

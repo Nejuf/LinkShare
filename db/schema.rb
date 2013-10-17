@@ -11,7 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017172058) do
+ActiveRecord::Schema.define(:version => 20131017205346) do
+
+  create_table "link_subs", :force => true do |t|
+    t.integer  "link_id",    :null => false
+    t.integer  "sub_id",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "link_subs", ["link_id", "sub_id"], :name => "index_link_subs_on_link_id_and_sub_id", :unique => true
+
+  create_table "links", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.string   "title",      :null => false
+    t.string   "url",        :null => false
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "links", ["user_id"], :name => "index_links_on_user_id"
+
+  create_table "subs", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "mod_id",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "subs", ["mod_id"], :name => "index_subs_on_mod_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",        :null => false

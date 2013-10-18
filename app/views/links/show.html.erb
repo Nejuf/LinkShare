@@ -1,6 +1,30 @@
-<%=link_to "#{@link.title}", @link.url %>
+<h2><%=link_to "#{@link.title}", @link.url %></h2>
 <p> <%= @link.body %> </p>
 
 <%=link_to "Edit Link", edit_link_url(@link)%>
+<br>
+<h4>Comments</h4>
+<br>
+<% @link.comments.each do |comment| %>
+  <% if comment.parent_comment_id.nil?%>
+      <%= render :partial => "comments/comment", :locals => {:comment_passed => comment, :comments_by_parent_id_passed => @link.comments_by_parent_id }%>
+  <% end %>
+<% end %>
 
-Comments
+<% if current_user %>
+  <h4>Leave a Comment! </h4>
+
+  <form action="<%=link_comments_url(@link)%>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+
+    <label for="comment_body">Comment</label>
+    <textarea id="comment_body" name="comment[body]"></textarea>
+
+    <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
+    <input type="hidden" name="comment[link_id]" value="<%= @link.id %>">
+
+    <input type="submit" value="Submit">
+  </form>
+<% else %>
+  <%=link_to "Sign In", new_session_url %> to comment!
+<% end %>

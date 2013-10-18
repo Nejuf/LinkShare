@@ -1,0 +1,14 @@
+Author: <%= comment_passed.user.username%>
+<br>
+Comment: <%= comment_passed.body %>
+<%= link_to "Reply", comment_url(comment_passed)%>
+<ul>
+  <% comments_by_parent_id_passed[comment_passed].each do |child_comment| %>
+
+      <%= render :partial => "comments/comment", :locals => { :comment_passed => child_comment,
+                                                  :comments_by_parent_id_passed => comments_by_parent_id_passed } %>
+
+  <% end %>
+
+</ul>
+

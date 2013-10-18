@@ -1,0 +1,22 @@
+Author: <%= @comment.user.username%>
+<br>
+Comment: <%= @comment.body %>
+
+<% if current_user %>
+  <h4>Leave a Comment! </h4>
+
+  <form action="<%=link_comments_url(@comment.link_id)%>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+
+    <label for="comment_body">Comment</label>
+    <textarea id="comment_body" name="comment[body]"></textarea>
+
+    <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
+    <input type="hidden" name="comment[link_id]" value="<%= @comment.link_id %>">
+    <input type="hidden" name="comment[parent_comment_id]" value="<%= @comment.id %>">
+
+    <input type="submit" value="Submit">
+  </form>
+<% else %>
+  <%=link_to "Sign In", new_session_url %> to comment!
+<% end %>
